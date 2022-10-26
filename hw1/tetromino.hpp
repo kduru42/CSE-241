@@ -1,5 +1,5 @@
 #ifndef TETROMINO_HPP
-#define TETROMINE_HPP
+#define TETROMINO_HPP
 
 #include <iostream>
 #include <string>
