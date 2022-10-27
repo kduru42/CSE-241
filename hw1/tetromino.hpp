@@ -4,7 +4,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <cmath>
 using namespace std;
 
 /* Declaring enum class as a char enum to take input a char as a user*/
@@ -30,8 +29,8 @@ class Tetromino
         void           rotate(string rotation);
         void           transpose(void);
         void           mirror_y(void);
-        void           print();
-        bool           canFit(Tetromino &other, string o_position);
+        void           print() const;
+        bool           canFit(const Tetromino &other, string o_position) const;
         void           set_shape();
     
     private:

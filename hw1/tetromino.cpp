@@ -73,7 +73,7 @@ void Tetromino::set_shape()
 }
 
 /* Function to print tetrominos*/
-void Tetromino::print()
+void Tetromino::print() const
 {
     for (vector<char> a : tetros_shape)
     {
@@ -146,8 +146,8 @@ void Tetromino::rotate(string rotate)
     }
 }
 
-
-bool Tetromino::canFit(Tetromino &other, string o_position)
+/*Function that controls if two tetrominos can fit to the right side of first tetromino*/
+bool Tetromino::canFit(const Tetromino &other, string o_position) const
 {
     int act_y = this->tetros_shape.size() - 1; //actual tetro's y axis
     int act_x = this->tetros_shape[0].size() - 1; //actual tetro's x axis
@@ -155,11 +155,11 @@ bool Tetromino::canFit(Tetromino &other, string o_position)
     int oth_x = other.tetros_shape[0].size() - 1; // other tetro's x axis
     if (o_position == "right")
     {
-        if (this->tetros_shape[act_y][act_x] != ' ' && other.tetros_shape[oth_y][0] != ' ')
+        if (this->tetros_shape[act_y][act_x] != ' ' && other.tetros_shape[oth_y][0] != ' ') //if right side of first tetro and left side of other tetro aren't empty, it can fit
             return (true);
-        if (this->tetros_shape[act_y][act_x] == ' ' && other.tetros_shape[oth_y][0] != ' ')
+        if (this->tetros_shape[act_y][act_x] == ' ' && other.tetros_shape[oth_y][0] != ' ') // controls fitting situation
         {
-            if (oth_y + 1 == 1)
+            if (oth_y + 1 == 1) //controls if the tetro is I piece
                 return (true);
             if (other.tetros_shape[oth_y - 1][0] != ' ')
                 return (false);
@@ -171,14 +171,14 @@ bool Tetromino::canFit(Tetromino &other, string o_position)
             if (this->tetros_shape[act_y - 1][act_x] != ' ')
                 return (false);
         }
-        if (this->tetros_shape[act_y][act_x] == ' ' && other.tetros_shape[oth_y][0] == ' ')
+        if (this->tetros_shape[act_y][act_x] == ' ' && other.tetros_shape[oth_y][0] == ' ') //controls S and Z piece situation
             return (false);
         return (true);
     }
     return (true);
 }
 
-
+/*If there is a O piece in the middle, it swaps O with the head of the tetrominos to avoid infinite loop situation*/
 void Tetromino::swap_o(vector <Tetromino> &tetros)
 {
     int count = 0;
@@ -190,11 +190,11 @@ void Tetromino::swap_o(vector <Tetromino> &tetros)
         }
 }
 
-
+/*Lastly it prints if tetros can fit*/
 void Tetromino::fit_tetros(vector <Tetromino> &tetros)
 {
-    vector <vector<char>> fitted;
-    swap_o(tetros);
+    vector <vector<char>> fitted; // vector to print fitted tetrominos
+    swap_o(tetros); //swapping O pieces
     int total_col = 0;
     int total_temp = 0;
     fitted.resize(4);
@@ -203,7 +203,7 @@ void Tetromino::fit_tetros(vector <Tetromino> &tetros)
     for (int i = 0; i < 4; i++)
         for (int j = 0; j < 50; j++)
             fitted[i].push_back(' ');
-    for (int i = 0; i < tetros[0].tetros_shape.size(); i++)
+    for (int i = 0; i < tetros[0].tetros_shape.size(); i++) //pushing first tetromino into fitted vector
     {
         total_col = total_temp;
         for (int j = 0; j < tetros[0].tetros_shape[0].size(); j++)
@@ -215,7 +215,7 @@ void Tetromino::fit_tetros(vector <Tetromino> &tetros)
     total_temp = total_col;
     for (int i = 0; i < tetros.size() - 1; i++)
     {
-        if (tetros[i].canFit(tetros[i + 1], "right"))
+        if (tetros[i].canFit(tetros[i + 1], "right")) //pushing other tetrominos if it can fit with the last tetromino
         {
             for (int k = 0; k < tetros[i + 1].tetros_shape.size(); k++)
             {
@@ -230,7 +230,7 @@ void Tetromino::fit_tetros(vector <Tetromino> &tetros)
         }
         else
         {
-            tetros[i + 1].rotate("right");
+            tetros[i + 1].rotate("right"); // if it can't fit, rotate the piece and check again if it can fit
             i--;
         }
     }
@@ -239,7 +239,7 @@ void Tetromino::fit_tetros(vector <Tetromino> &tetros)
             if (fitted[i][j] != 'I' && fitted[i][j] != 'O' && fitted[i][j] != 'L'
                  && fitted[i][j] != 'S' && fitted[i][j] != 'Z' && fitted[i][j] != 'J' && fitted[i][j] != 'T')
                     fitted[i][j] = ' ';
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 4; i++) //purpose of this loop is to avoid slipping situtation
     {
         for (int j = 0; j < total_col; j++)
         {
@@ -265,7 +265,7 @@ void Tetromino::fit_tetros(vector <Tetromino> &tetros)
                     }
         }
     }
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 4; i++) //finally printing the fitted vector
     {
         for (int j = 0; j < total_col; j++)
         {
