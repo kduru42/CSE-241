@@ -1,3 +1,5 @@
+/* KAMİL DURU 200104004064 GEBZE TECHNICAL UNIVERSITY CSE 241 HOMEWORK2 */
+
 #include "tetris.hpp"
 
 int main()
@@ -26,9 +28,9 @@ int main()
     game.draw_board();
     do 
     {
-        // cout << "\033[s";
         cout << "Please enter the tetromino shape: ";
         cin >> piece_type;
+        cout << endl;
         if (piece_type == 'I' || piece_type == 'O' || piece_type == 'T' || piece_type == 'J' 
             || piece_type == 'L' || piece_type == 'S' || piece_type == 'Z')
         {
@@ -48,7 +50,7 @@ int main()
             cout << "GAME OVER!" << endl;
         else
         {
-           // cout << "Invalid piece type. Please try again." << endl;
+            cout << "Invalid piece type. Please try again." << endl;
             cin.clear();
             cin.ignore();
         }

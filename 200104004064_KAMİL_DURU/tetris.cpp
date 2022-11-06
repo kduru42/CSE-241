@@ -44,7 +44,6 @@ void Tetris::draw_board() const
             cout << b;
         cout <<endl;
     }
-
 }
 
 /* Function to replace tetromino to the index after last tetromino and rotates it according to fitting situtation */
@@ -137,11 +136,9 @@ void Tetris::fit_tetro(Tetromino &tetro)
 /* Function to animate the drop of tetromino to the bottom */
 void Tetris::animate_drop(Tetromino &tetro)
 {
-    cout << "\033[" + to_string(board.size() + 1) + "A";
     draw_board();
     fit_tetro(tetro);
     this_thread::sleep_for(chrono::milliseconds(50)); //sleeps between every draw_board
-    cout << "\033[" + to_string(board.size()) + "A";
     draw_board();
     this_thread::sleep_for(chrono::milliseconds(50));
     // It decrease index one by one and waits 50 ms
@@ -155,9 +152,8 @@ void Tetris::animate_drop(Tetromino &tetro)
                     swap(board[j][k], board[j - 1][k]);
             }
         }
-        cout << "\033[" + to_string(board.size()) + "A";
         draw_board();
-        
+        cout << endl;
         this_thread::sleep_for(chrono::milliseconds(50));
     }
     add_col2 += tetro.get_shape()[0].size();
@@ -165,11 +161,10 @@ void Tetris::animate_drop(Tetromino &tetro)
     if (tetros.size() > 1)
     {
         slip_into_tetro(tetro);
-        cout << "\033[" + to_string(board.size()) + "A";
         draw_board();
+        cout << endl;
         this_thread::sleep_for(chrono::milliseconds(50));
     }
-    // cout << "\033[u" << "\033[K";
 }
 /* Function to return a random piece type */
 Pieces Tetris::random_piece()
