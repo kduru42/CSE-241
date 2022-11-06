@@ -12,7 +12,7 @@ SOURCE = tetromino.cpp tetris.cpp
 
 OBJECT = $(SOURCE:%.cpp=%.o)
 
-all: $(NAME2) $(NAME1)
+all: fclean $(NAME2) $(NAME1)
 
 $(NAME1): $(MAIN1) $(OBJECT)
 	$(CC) $(FLAGS) $(OBJECT) $(MAIN1) -o $(NAME1)
