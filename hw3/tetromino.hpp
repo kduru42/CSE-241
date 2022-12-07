@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <string>
-#include <vector>
 using namespace std;
 
 /* Declaring enum class as a char enum to take input a char as a user*/
@@ -21,21 +20,27 @@ enum class Pieces : char
 class Tetromino
 {
     public:
+        Tetromino () {};
         Tetromino(Pieces piece); //constructor
-        vector<vector<char>>    get_shape() {return (tetros_shape);};
-        static void             fit_tetros(vector <Tetromino> &tetros);
+        Tetromino(const Tetromino &other);
+        ~Tetromino();
+        inline int              get_tetro_x_size() const {return (tetro_x_size);};
+        inline int              get_tetro_y_size() const {return (tetro_y_size);};
+        char**                  get_shape() const {return (tetros_shape);};
         static Pieces           get_piece(char a);
-        Pieces                  get_which_p() {return (which_p);};
-        static void             swap_o(vector <Tetromino> &tetros);
+        Pieces                  get_which_p() const {return (which_p);};
+        static void             swap_o(Tetromino **tetros);
+        Tetromino&              operator=(const Tetromino &other);
         void                    rotate(const string rotation);
         void                    transpose(void);
         void                    mirror_y(void);
         void                    print() const;
-        bool                    canFit(const Tetromino &other, string o_position) const;
         void                    set_shape();
     
     private:
-        vector <vector<char>> tetros_shape;
+        char **tetros_shape;
+        int tetro_x_size;
+        int tetro_y_size;
         Pieces which_p;
         char shape;
         

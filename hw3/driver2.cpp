@@ -1,5 +1,3 @@
-/* KAMİL DURU 200104004064 GEBZE TECHNICAL UNIVERSITY CSE 241 HOMEWORK2 */
-
 #include "tetris.hpp"
 
 int main()
@@ -28,29 +26,27 @@ int main()
     game.draw_board();
     do 
     {
+        // cout << "\033[s";
         cout << "Please enter the tetromino shape: ";
         cin >> piece_type;
-        cout << endl;
         if (piece_type == 'I' || piece_type == 'O' || piece_type == 'T' || piece_type == 'J' 
             || piece_type == 'L' || piece_type == 'S' || piece_type == 'Z')
         {
-            game.get_tetros().push_back(Tetromino::get_piece(piece_type));
-            game.get_tetros()[game.get_tetros().size() - 1].set_shape();
-            game.add_tetromino(game.get_tetros()[game.get_tetros().size() - 1]);
-            game.animate_drop(game.get_tetros()[game.get_tetros().size() - 1]);
+            Tetromino newT = Tetromino(Tetromino::get_piece(piece_type));
+            game += newT;
+            game.animate_drop(newT);
         }
         else if (piece_type == 'R')
         {
-            game.get_tetros().push_back(Tetris::random_piece());
-            game.get_tetros()[game.get_tetros().size() - 1].set_shape();
-            game.add_tetromino(game.get_tetros()[game.get_tetros().size() - 1]);
-            game.animate_drop(game.get_tetros()[game.get_tetros().size() - 1]);
+            Tetromino newT = Tetromino(Tetris::random_piece());
+            game += newT;
+            game.animate_drop(newT);
         }
         else if (piece_type == 'Q')
             cout << "GAME OVER!" << endl;
         else
         {
-            cout << "Invalid piece type. Please try again." << endl;
+           // cout << "Invalid piece type. Please try again." << endl;
             cin.clear();
             cin.ignore();
         }
